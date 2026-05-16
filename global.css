@@ -38,8 +38,6 @@ body {
   z-index: 10;
   pointer-events: none;
 
-  background: yellow;
-  opacity: 0.5;
 }
 
 #map circle {
@@ -57,6 +55,28 @@ body {
   padding: 0.5em 1.5em;
   color: white;
   font-weight: bold;
+}
+
+
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+#map circle {
+  fill: var(--color);
+
+  fill-opacity: 0.6;
+  stroke: white;
+  stroke-width: 1px;
+
+  pointer-events: auto;
 }
 
 .legend > div:nth-child(1) {
