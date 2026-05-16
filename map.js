@@ -65,46 +65,49 @@ map.on('load', async () => {
     .scaleQuantize()
     .domain([0, 1])
     .range([0, 0.5, 1]);
+
+
+
+  const svg = d3.select('#map').select('svg');
+  let stations = jsonData.data.stations;
+  console.log('Stations Array:', stations);
+
+  function getCoords(station) {
+    const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
+    const { x, y } = map.project(point); // Project to pixel coordinates
+    return { cx: x, cy: y }; // Return as object for use in SVG attributes
+  }
+
+  const circles = svg
+    .selectAll('circle')
+    .data(stations, (d) => d.short_name)
+    .enter()
+    .append('circle')
+    .attr('r', 5) // Radius of the circle
+    .style('--departure-ratio', (d) =>
+      stationFlow(d.departures / d.totalTraffic),
+    )
+    .attr('fill', 'steelblue') // Circle fill color
+    .attr('stroke', 'white') // Circle border color
+    .attr('stroke-width', 1) // Circle border thickness
+    .attr('opacity', 0.8); // Circle opacity
+
+  function updatePositions() {
+    circles
+      .attr('cx', (d) => getCoords(d).cx) // Set the x-position using projected coordinates
+      .attr('cy', (d) => getCoords(d).cy); // Set the y-position using projected coordinates
+  }
+
+  updatePositions();
+
+  map.on('move', updatePositions); // Update during map movement
+  map.on('zoom', updatePositions); // Update during zooming
+  map.on('resize', updatePositions); // Update on window resize
+  map.on('moveend', updatePositions); // Final adjustment after movement ends
+
 });
 
-const svg = d3.select('#map').select('svg');
-let stations = jsonData.data.stations;
-console.log('Stations Array:', stations);
 
-function getCoords(station) {
-  const point = new mapboxgl.LngLat(+station.lon, +station.lat); // Convert lon/lat to Mapbox LngLat
-  const { x, y } = map.project(point); // Project to pixel coordinates
-  return { cx: x, cy: y }; // Return as object for use in SVG attributes
-}
-
-//changed
-const circles = svg
-  .selectAll('circle')
-  .data(stations, (d) => d.short_name)
-  .enter()
-  .append('circle')
-  .attr('r', 5) // Radius of the circle
-  .style('--departure-ratio', (d) =>
-    stationFlow(d.departures / d.totalTraffic),
-  )
-  .attr('fill', 'steelblue') // Circle fill color
-  .attr('stroke', 'white') // Circle border color
-  .attr('stroke-width', 1) // Circle border thickness
-  .attr('opacity', 0.8); // Circle opacity
-
-
-function updatePositions() {
-  circles
-    .attr('cx', (d) => getCoords(d).cx) // Set the x-position using projected coordinates
-    .attr('cy', (d) => getCoords(d).cy); // Set the y-position using projected coordinates
-}
-
-updatePositions();
-
-map.on('move', updatePositions); // Update during map movement
-map.on('zoom', updatePositions); // Update during zooming
-map.on('resize', updatePositions); // Update on window resize
-map.on('moveend', updatePositions); // Final adjustment after movement ends
 
 
 
