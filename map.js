@@ -182,10 +182,14 @@ map.on('load', async () => {
     .range([0, 25]);
 
   circles
+    .style(
+      '--departure-ratio',
+      d => stationFlow(d.departures / d.totalTraffic)
+    )
     .attr('r', d => radiusScale(d.totalTraffic))
     .append('title')
-    .text(d =>
-      `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
+    .text(
+      d => `${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`
     );
 
 
