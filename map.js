@@ -68,32 +68,8 @@ map.on('load', async () => {
     return { cx: x, cy: y }; // Return as object for use in SVG attributes
   }
 
-  const circles = svg
-    .selectAll('circle')
-    .data(stations, (d) => d.short_name)
-    .enter()
-    .append('circle')
-    .attr('r', 5) // Radius of the circle
-    .style('--departure-ratio', (d) =>
-      stationFlow(d.departures / d.totalTraffic),
-    )
-
-    .attr('stroke', 'white') // Circle border color
-    .attr('stroke-width', 1) // Circle border thickness
-    .attr('opacity', 0.8); // Circle opacity
-
-  function updatePositions() {
-    circles
-      .attr('cx', (d) => getCoords(d).cx) // Set the x-position using projected coordinates
-      .attr('cy', (d) => getCoords(d).cy); // Set the y-position using projected coordinates
-  }
-
-  updatePositions();
-
-  map.on('move', updatePositions); // Update during map movement
-  map.on('zoom', updatePositions); // Update during zooming
-  map.on('resize', updatePositions); // Update on window resize
-  map.on('moveend', updatePositions); // Final adjustment after movement ends
+  
+  
 
 
 
@@ -181,6 +157,23 @@ map.on('load', async () => {
     .domain([0, d3.max(stations, d => d.totalTraffic)])
     .range([0, 25]);
 
+
+
+  const circles = svg
+    .selectAll('circle')
+    .data(stations, (d) => d.short_name)
+    .enter()
+    .append('circle')
+    .attr('r', 5) // Radius of the circle
+    .style('--departure-ratio', (d) =>
+      stationFlow(d.departures / d.totalTraffic),
+    )
+
+    .attr('stroke', 'white') // Circle border color
+    .attr('stroke-width', 1) // Circle border thickness
+    .attr('opacity', 0.8); // Circle opacity
+
+
   circles
     .style(
       '--departure-ratio',
@@ -193,7 +186,18 @@ map.on('load', async () => {
     );
 
 
+  function updatePositions() {
+    circles
+      .attr('cx', (d) => getCoords(d).cx) // Set the x-position using projected coordinates
+      .attr('cy', (d) => getCoords(d).cy); // Set the y-position using projected coordinates
+  }
 
+  updatePositions();
+
+  map.on('move', updatePositions); // Update during map movement
+  map.on('zoom', updatePositions); // Update during zooming
+  map.on('resize', updatePositions); // Update on window resize
+  map.on('moveend', updatePositions); // Final adjustment after movement ends
 
   function updateScatterPlot(timeFilter) {
     const filteredTrips = filterTripsbyTime(trips, timeFilter);
