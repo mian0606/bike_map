@@ -185,8 +185,6 @@ map.on('load', async () => {
     }); 
   }
 
-
-  let stations = jsonData.data.stations;
   stations = computeStationTraffic(stations, trips);
   const radiusScale = d3
     .scaleSqrt()
