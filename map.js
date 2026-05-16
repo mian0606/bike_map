@@ -131,9 +131,6 @@ function updateTimeDisplay() {
   updateScatterPlot(timeFilter);
 }
 
-timeSlider.addEventListener('input', updateTimeDisplay);
-updateTimeDisplay();
-
 
 
 function minutesSinceMidnight(date) {
@@ -222,4 +219,5 @@ function updateScatterPlot(timeFilter) {
 }
 
 
-updateScatterPlot(timeFilter);
+timeSlider.addEventListener('input', updateTimeDisplay);
+updateTimeDisplay();
