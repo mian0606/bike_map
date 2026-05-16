@@ -1,24 +1,22 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
 body {
   font: 100%/1.5 system-ui, sans-serif;
-  display: flex;
-  flex-flow: column;
   max-width: 80em;
   min-height: 100vh;
   box-sizing: border-box;
   margin: auto;
   padding: 1em;
+
+  display: flex;
+  flex-flow: column;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 5;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-}
 #map {
   position: relative;
   width: 100%;
@@ -26,6 +24,8 @@ body {
 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+
+  overflow: hidden;
 }
 
 #map svg {
@@ -40,40 +40,11 @@ body {
 
   background: yellow;
   opacity: 0.5;
-}header {
-  display: flex;
-  gap: 1em;
-  align-items: baseline;
 }
 
-label {
-  margin-left: auto;
-}
-
-time,
-em {
-  display: block;
-}
-
-em {
-  color: gray;
-}
-
-
-#map circle,
-.legend > div {
-  --color-departures: steelblue;
-  --color-arrivals: darkorange;
-  --color: color-mix(
-    in oklch,
-    var(--color-departures) calc(100% * var(--departure-ratio)),
-    var(--color-arrivals)
-  );
-}
 #map circle {
-  fill: var(--color);
+  pointer-events: auto;
 }
-
 .legend {
   display: flex;
   gap: 1px;
