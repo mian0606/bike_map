@@ -204,8 +204,11 @@ map.on('load', async () => {
 
     circles
       .data(filteredStations, (d) => d.short_name)
-      .join('circle')
-      .attr('r', (d) => radiusScale(d.totalTraffic));
+
+      .attr('r', (d) => radiusScale(d.totalTraffic))
+      .style('--departure-ratio', d =>
+        stationFlow(d.totalTraffic === 0 ? 0.5 : d.departures / d.totalTraffic)
+      );
   }
 
 
