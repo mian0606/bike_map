@@ -38,7 +38,7 @@ map.on('load', async () => {
   // Cambridge bike lanes
   map.addSource('cambridge_route', {
     type: 'geojson',
-    data: 'https://data.cambridgema.gov/resource/2s45-2dbh.geojson',
+    data: 'https://raw.githubusercontent.com/cambridgegis/cambridgegis_data/main/Recreation/Bike_Facilities.geojson',
   });
 
   map.addLayer({
