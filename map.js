@@ -54,7 +54,7 @@ map.on('load', async () => {
     const jsonurl = "./bluebikes-stations.json";
 
     // Await JSON fetch
-    const jsonData = await d3.json(jsonurl);
+    jsonData = await d3.json(jsonurl);
 
     console.log('Loaded JSON Data:', jsonData); // Log to verify structure
   } catch (error) {
