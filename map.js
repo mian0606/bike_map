@@ -77,6 +77,7 @@ map.on('load', async () => {
     .style('--departure-ratio', (d) =>
       stationFlow(d.departures / d.totalTraffic),
     )
+    .attr('fill', 'steelblue') // Circle fill color
     .attr('stroke', 'white') // Circle border color
     .attr('stroke-width', 1) // Circle border thickness
     .attr('opacity', 0.8); // Circle opacity
@@ -204,10 +205,8 @@ map.on('load', async () => {
 
     circles
       .data(filteredStations, (d) => d.short_name)
-      .attr('r', (d) => radiusScale(d.totalTraffic))
-      .style('--departure-ratio', d =>
-        stationFlow(d.totalTraffic === 0 ? 0.5 : d.departures / d.totalTraffic)
-      );
+      .join('circle')
+      .attr('r', (d) => radiusScale(d.totalTraffic));
   }
 
 
