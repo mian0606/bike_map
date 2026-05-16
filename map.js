@@ -84,7 +84,7 @@ const circles = svg
   .attr('r', 5) // Radius of the circle
   .style('--departure-ratio', (d) =>
     stationFlow(d.departures / d.totalTraffic),
-  );
+  )
   .attr('fill', 'steelblue') // Circle fill color
   .attr('stroke', 'white') // Circle border color
   .attr('stroke-width', 1) // Circle border thickness
