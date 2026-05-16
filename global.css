@@ -40,9 +40,7 @@ body {
 
 }
 
-#map circle {
-  pointer-events: auto;
-}
+
 .legend {
   display: flex;
   gap: 1px;
@@ -62,6 +60,7 @@ body {
 .legend > div {
   --color-departures: steelblue;
   --color-arrivals: darkorange;
+  --departure-ratio: 0.5;
   --color: color-mix(
     in oklch,
     var(--color-departures) calc(100% * var(--departure-ratio)),
